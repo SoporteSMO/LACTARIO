@@ -2,6 +2,8 @@ import express from "express";
 import db  from "./config/db.js";
 import dotenv from "dotenv";
 dotenv.config({path:'.env'});
+import usuarioRouter from "./routes/usuarioRoutes.js";
+
 const app = express();
 
 //para poder enviar respuestas tipo json
@@ -10,7 +12,7 @@ app.use(express.json())
 //conexion BDD
 try {
     await db.authenticate();
-    // db.sync();
+    db.sync();
     console.log('Conexion correcta a la BDD');
 } catch (error) {
     console.log('error en la base');
@@ -23,7 +25,8 @@ try {
 // });
 
 //ROUTING
-
+//Routing Usuarios
+app.use('/api/usuarios',usuarioRouter)
 
 const port =process.env.BD_PORT
 
